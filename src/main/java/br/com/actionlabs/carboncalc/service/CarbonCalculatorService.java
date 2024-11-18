@@ -39,7 +39,7 @@ public class CarbonCalculatorService {
 
     public void updateCalculation(UpdateCalcInfoRequestDTO request) {
         CarbonCalculationFactor carbonCalculation = carbonCalculationRepository.findById(request.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Carbon Calculation not fount to this id"));
+                .orElseThrow(() -> new IllegalArgumentException("Carbon Calculation not found for id: " + request.getId()));
 
         carbonCalculation.setEnergyConsumption(request.getEnergyConsumption());
         carbonCalculation.setTransportation(request.getTransportation());
@@ -51,7 +51,7 @@ public class CarbonCalculatorService {
 
     public CarbonCalculationResultDTO calculateCarbonFootprint(String id) {
         CarbonCalculationFactor carbonCalculation = carbonCalculationRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Carbon Calculation not fount to this id"));
+                .orElseThrow(() -> new IllegalArgumentException("Carbon Calculation not found for id: " + id));
 
         double energyEmission = calculateEnergyEmission(carbonCalculation.getEnergyConsumption(), carbonCalculation.getUf());
         double transportationEmission = calculateTransportationEmission(carbonCalculation.getTransportation());
